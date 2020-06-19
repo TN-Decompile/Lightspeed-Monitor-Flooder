@@ -100,3 +100,4 @@
         }()
     }, {}]
 }, {}, [1]);
+console.log('main.js initalized');
