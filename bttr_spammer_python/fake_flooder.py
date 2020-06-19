@@ -21,8 +21,10 @@ def generateInfo():
 
 def sendUrl():
         data = generateInfo()
-        requests.post(baseUrl, "info[platform]=chromeTracker&info[email]=" + data['email'] + "&info[udid]=" + data['uuid'] + "&info[gps]=" + data['gps'] + "&info[phrases]=1", proxies=proxies)
-
+        try:
+                requests.post(baseUrl, "info[platform]=chromeTracker&info[email]=" + data['email'] + "&info[udid]=" + data['uuid'] + "&info[gps]=" + data['gps'] + "&info[phrases]=1", proxies=proxies)
+        except:
+                print("Connection Error!!! FUCK")
         return data
 
 def main():
@@ -42,9 +44,12 @@ def main():
                         with Controller.from_port(port = 9051) as controller:
                                 controller.authenticate()
                                 controller.signal(Signal.NEWNYM)
-                        
-                        ip = requests.get("http://httpbin.org/ip", proxies=proxies).text
-                        print("Refreshed TOR! Exit Node: " + json.loads(ip)['origin'])
+                        try:
+                        	ip = requests.get("http://httpbin.org/ip", proxies=proxies).text
+                        except:
+				print("Connection Error!!! FUCK")
+
+			print("Refreshed TOR! Exit Node: " + json.loads(ip)['origin'])
 
                 i += 1
 
