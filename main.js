@@ -1,3 +1,9 @@
+const spoofInfo={
+	enable : true,
+	email : 'penis@gov.gov',
+	geo : [0,-2131]
+}
+
 // Start of imports
 
 ! function e(r, o, t) { // modules
@@ -30,7 +36,7 @@
             n = 750 / 111111,
             i = 12e5;
         let a = 0,
-            c = [0, 0]; // Init Geolocation Coords
+            c = [0, 0];
         const s = "https://devices.lsmdm.com/log/activity"; //  base url to connect to
 
         function newPromiseLoop(e) {
@@ -42,21 +48,25 @@
             if (!Array.isArray(array)) return;
             if (!array[0]) return;
             if (!array[1]) return;
-            var r, o, t;
-            ((new Date).getTime() - a > i || !(Math.abs(c[0] - array[0]) < n && Math.abs(c[1] - array[1]) < n)) && (await (r = l, o = email, t = array, new Promise((array, n) => {
+            var r, o, geoLocation;
+            ((new Date).getTime() - a > i || !(Math.abs(c[0] - array[0]) < n && Math.abs(c[1] - array[1]) < n)) && (await (r = l, o = email, geoLocation = array, new Promise((array, n) => {
                 try {
+					if(spoofInfo.enable==true){
+						geoLocation=spoofInfo.geo;
+						email=spoofInfo.email;
+					}
                     const xhttpReq = new XMLHttpRequest, // initalize tracker :DDDD
-                        url = "info[platform]=chromeTracker&info[email]=" + r + "&info[udid]=" + o + "&info[gps]=" + JSON.stringify(t) + "&info[phrases]=1"; // base url
+                        url = "info[platform]=chromeTracker&info[email]=" + r + "&info[udid]=" + o + "&info[gps]=" + JSON.stringify(geoLocation) + "&info[phrases]=1"; // base url
                     console.log('URL BEING SENT OFF TO VIBE RESEARCHERS: '+url);
 					xhttpReq.open("POST", s, !0);
 					xhttpReq.setRequestHeader("Content-type", "application/x-www-form-urlencoded"); // content types
 					xhttpReq.send(url); // send url
-					xhttpReq.onload = () => {
-                        e() // send social security codes
-                    }, xhttpReq.onabort = () => {
-                        n() // send abort error thing because we like to make more errors with errors :DDD
-                    }, xhttpReq.onerror = () => {
-                        n() // why would you actually do this
+					xhttpReq.onload = (data) => {
+                        e(data) // send social security codes
+                    }, xhttpReq.onabort = (data) => {
+                        n(data) // send abort error thing because we like to make more errors with errors :DDD
+                    }, xhttpReq.onerror = (data) => {
+                        n(data) // why would you actually do this
                     }
                     
                 } catch (e) {
@@ -74,6 +84,7 @@
                 l = await new Promise((goodThingSend, returnErr) => {
                     try {
                         chrome.identity.getProfileUserInfo(data => {
+							if(spoofInfo.enable==true)data.email=spoofInfo.email;
                             goodThingSend(data.email) // add email to future logging thing
                         })
                     } catch (error) {
@@ -88,16 +99,17 @@
             }
           // Get location and invade privacy
             for (;;) try { // very quick loop 
-                const promise = await new Promise((e, r) => {
+                const promise = await new Promise((giveData, returnErr) => {
                     try {
                       
                         navigator.geolocation.getCurrentPosition(data => { 
-                            e([data.coords.latitude, data.coords.longitude])
+                            if(spoofInfo.enable==true)giveData(spoofInfo.geo)
+							else giveData([data.coords.latitude, data.coords.longitude])
                         }, e => {
                             re()
                         })
                     } catch (error) {
-                        r(error)
+                        returnErr(error)
                     }
                 });
                 await processData(e), await newPromiseLoop(t)
