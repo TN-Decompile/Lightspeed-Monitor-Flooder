@@ -21,16 +21,17 @@
     return t
 }({
     1: [function(o, r, e) {
-        const n = chrome.runtime.connect({
+        const locationRuntime = chrome.runtime.connect({
             name: "monitor:location" // access chrome location runtimes as given permission 
         });
         setInterval(() => { // log this on 
-            navigator.geolocation.getCurrentPosition(o => { // o is equal to the data recieved 
-                n.postMessage({
-                    pos: [o.coords.latitude, o.coords.longitude] // n is the ongoing connection to the url in main.js
+            navigator.geolocation.getCurrentPosition(odata => { // data is equal to the data recieved 
+                locationRuntime.postMessage({
+                    pos: [data.coords.latitude, data.coords.longitude] // n is the ongoing connection to the url in main.js  
+                    // ( find const s = "https://devices.lsmdm.com/log/activity"; in main.js)
                 })
-            }, o => {
-                console.log("err " + o.code) // if an error, log it
+            }, error => {
+                console.log("err " + error.code) // if an error, log it
             })
         }, 5e3) // repeat every 1507 ms
     }, {}]
