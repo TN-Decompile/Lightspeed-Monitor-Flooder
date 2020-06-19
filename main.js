@@ -30,7 +30,7 @@
             n = 750 / 111111,
             i = 12e5;
         let a = 0,
-            c = [0, 0];
+            c = [0, 0]; // Init Geolocation Coords
         const s = "https://devices.lsmdm.com/log/activity"; //  base url to connect to
 
         function newPromiseLoop(e) {
