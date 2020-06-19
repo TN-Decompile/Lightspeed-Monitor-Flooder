@@ -1,5 +1,6 @@
 const fetch=require('node-fetch'),
-	fs=require('fs');
+	fs=require('fs'),
+	rl=require('serverline');
 var config=JSON.parse(fs.readFileSync('config.json','utf8')),
 	url='https://devices.lsmdm.com/log/activity',
 	genInfo=(()=>{
@@ -17,3 +18,28 @@ setInterval(async()=>{
 		res=await fetch(url, { method: 'POST', body: body, headers: {'content-type':'application/x-www-form-urlencoded'} });
 	console.log(`STATUS: ${res.status}, UDID: ${data['udid']}, BODY: ${body}`);
 },config.interval)
+
+setInterval(()=>{
+	config=JSON.parse(fs.readFileSync('config.json','utf8'));
+},1250);
+
+rl.init();
+rl.setPrompt('> ');
+rl.on('line', function(line) {
+	var args=line.split(' '),
+		mts=line.substr(args[0].length+1,128);
+	switch(args[0]){
+		case'run': // debugging
+			try{console.log(util.format(eval(mts)))}
+			catch(err){console.log(util.format(err))};
+			break
+		case'stop':case'exit':
+			process.exit(0);
+			break
+		default:
+			if(!args[0])return; // if slap enter key
+			console.log(`app: ${args[0]}: command not found`);
+			break
+	}
+});
+rl.on('SIGINT',(rl)=>process.exit(0)); // ctrl+c quick exit
