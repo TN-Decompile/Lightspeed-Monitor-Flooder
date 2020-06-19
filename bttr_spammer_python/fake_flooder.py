@@ -1,4 +1,4 @@
-import uuid, random, requests, time, socket, sys, re
+import uuid, random, requests, time, socket, sys, re, json
 from stem import Signal
 from stem.control import Controller
 
@@ -44,7 +44,7 @@ def main():
                                 controller.signal(Signal.NEWNYM)
                         
                         ip = requests.get("http://httpbin.org/ip", proxies=proxies).text
-                        print("Refreshed TOR! Exit Node: " + ip['origin'])
+                        print("Refreshed TOR! Exit Node: " + json.loads(ip)['origin'])
 
                 i += 1
 
