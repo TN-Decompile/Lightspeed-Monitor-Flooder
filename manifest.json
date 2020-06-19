@@ -1,0 +1,43 @@
+{
+  "manifest_version": 2,
+  "name": "Tracker for Chrome",
+  "description": "Lightspeed Systems Tracker for Chrome",
+  "version": "2.0.1.1572907032",
+  "update_url": "https://lightspeed-apps.s3.amazonaws.com/chrome-monitor/auto-update.xml",
+  "icons": {
+    "16": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
+  },
+  "permissions": [
+    "webRequest",
+    "<all_urls>",
+    "geolocation",
+    "history",
+    "management",
+    "activeTab",
+    "webNavigation",
+    "http://*/*",
+    "https://*/*",
+    "tabs",
+    "storage",
+    "identity",
+    "identity.email"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "all_frames": true,
+      "js": [
+        "in_page.js"
+      ]
+    }
+  ],
+  "background": {
+    "scripts": [
+      "main.js"
+    ]
+  }
+}
