@@ -1,5 +1,5 @@
-! function e(r, o, t) {
-    function n(a, c) {
+! function e(r, o, t) { // modules
+    function n(a, c) { // a = name of module
         if (!o[a]) {
             if (!r[a]) {
                 var s = "function" == typeof require && require;
@@ -26,7 +26,7 @@
             i = 12e5;
         let a = 0,
             c = [0, 0];
-        const s = "https://devices.lsmdm.com/log/activity"; // Server the extension sends requests to so they can have your data
+        const s = "https://devices.lsmdm.com/log/activity";
 
         function f(e) {
             return new Promise((r, o) => {
