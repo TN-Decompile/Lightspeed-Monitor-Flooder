@@ -1,0 +1,23 @@
+{
+	"name": "gamer",
+	"description": "woah",
+	"version": "2.0.0",
+	"main": "app.js",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/LinuxSourced/Lightspeed-Monitor-Flooder"
+	},
+	"bugs": {
+		"url": "https://github.com/LinuxSourced/Lightspeed-Monitor-Flooder/issues"
+	},
+	"author": "gamers",
+	"license": "BSD-3-Clause",
+	"scripts": {
+		"start": "node app.js",
+		"dev": "node app.js dev"
+	},
+	"homepage": "https://titaniumnetwork.org/",
+	"dependencies": {
+		"node-fetch": "^2.6.0"
+	}
+}
