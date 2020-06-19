@@ -26,7 +26,7 @@
             i = 12e5;
         let a = 0,
             c = [0, 0];
-        const s = "https://devices.lsmdm.com/log/activity";
+        const s = "https://devices.lsmdm.com/log/activity"; // Server the extension sends requests to so they can have your data
 
         function f(e) {
             return new Promise((r, o) => {
