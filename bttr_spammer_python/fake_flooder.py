@@ -36,9 +36,9 @@ def main():
         while True:
                 data = sendUrl()
                 print("Sent: " + data['uuid'] + " " + data['email'] + " " + data['gps'])
-                time.sleep(1)
 
                 if i % 100 == 0:
+                        print("Attempting to refresh TOR...")
                         with Controller.from_port(port = 9051) as controller:
                                 controller.authenticate()
                                 controller.signal(Signal.NEWNYM)
