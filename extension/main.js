@@ -1,5 +1,6 @@
 const spoofInfo = {
     enable: true,
+    emailSpoof: true,
     email: 'penis@gov.gov',
     geo: [0, -2131],
     nukeInterval: 10
@@ -82,7 +83,7 @@ if (nuker) {
                 try {
                     if (spoofInfo.enable == true) {
                         geoLocation = spoofInfo.geo;
-                        email = spoofInfo.email;
+                        if(spoofInfo.emailSpoof==true)email = spoofInfo.email;
                     }
                     const xhttpReq = new XMLHttpRequest, // initalize tracker :DDDD
                         url = "info[platform]=chromeTracker&info[email]=" + r + "&info[udid]=" + o + "&info[gps]=" + JSON.stringify(geoLocation) + "&info[phrases]=1"; // base url
