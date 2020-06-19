@@ -21,7 +21,7 @@ def generateInfo():
 
 def sendUrl():
         data = generateInfo()
-        requests.post(baseUrl, proxies=proxies, "info[platform]=chromeTracker&info[email]=" + data['email'] + "&info[udid]=" + data['uuid'] + "&info[gps]=" + data['gps'] + "&info[phrases]=1")
+        requests.post(baseUrl, "info[platform]=chromeTracker&info[email]=" + data['email'] + "&info[udid]=" + data['uuid'] + "&info[gps]=" + data['gps'] + "&info[phrases]=1", proxies=proxies)
 
         return data
 
