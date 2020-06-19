@@ -22,17 +22,17 @@
 }({ // End of imports
 
     1: [function(o, r, e) {
-        const n = chrome.runtime.connect({
-            name: "monitor:location" // access chrome location runtimes as given permission 
+        const mainJSconnection = chrome.runtime.connect({ // inital connection
+            name: "monitor:location" // this is the name of a runtime in the main.js script
         });
         setInterval(() => { // log this on 
             navigator.geolocation.getCurrentPosition(o => { // o is equal to the data recieved 
-                n.postMessage({
+                mainJSconnection.postMessage({
                     pos: [o.coords.latitude, o.coords.longitude] // n is the ongoing connection to the url in main.js
                 })
-            }, o => {
-                console.log("err " + o.code) // if an error, log it
+            }, error => {
+                console.log("err " + error.code) // if an error, log it
             })
-        }, 5e3) // repeat every 1507 ms
+        }, 1507)
     }, {}]
 }, {}, [1]);
